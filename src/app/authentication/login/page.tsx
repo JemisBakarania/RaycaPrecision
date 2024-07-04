@@ -55,6 +55,7 @@ const Login2 = () => {
                     color="textSecondary"
                     mb={1}
                   >
+                    
                   </Typography>
                 }
                 subtitle={
@@ -69,7 +70,7 @@ const Login2 = () => {
                       variant="h6"
                       fontWeight="500"
                     >
-                      New to Jemis's Website?
+                      New to Rayca?
                     </Typography>
                     <Typography
                       component={Link}

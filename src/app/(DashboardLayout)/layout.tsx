@@ -1,9 +1,8 @@
 "use client";
-import { styled, Container, Box, Card } from "@mui/material";
+import { styled, Container, Box } from "@mui/material";
 import React, { useState } from "react";
 import Header from "@/app/(DashboardLayout)/layout/header/Header";
 import Sidebar from "@/app/(DashboardLayout)/layout/sidebar/Sidebar";
-
 
 
 const MainWrapper = styled("div")(() => ({
@@ -24,12 +23,15 @@ const PageWrapper = styled("div")(() => ({
 interface Props {
   children: React.ReactNode;
 }
-const StyledCard = styled(Card)(({ theme }) => ({
-  backgroundColor: 'transparent', // Ensure card background is transparent
-  boxShadow: 'none', // Remove box shadow
-}));
 
-
+// Define or adjust SidebarProps interface
+export interface SidebarProps {
+  isSidebarOpen: boolean;
+  isMobileSidebarOpen: boolean;
+  onSidebarClose: () => void;
+  onMobileSidebarClose: () => void; // Ensure this is included if it's required
+  // Add other necessary props
+}// Define RootLayout component
 export default function RootLayout({
   children,
 }: {
@@ -37,47 +39,40 @@ export default function RootLayout({
 }) {
   const [isSidebarOpen, setSidebarOpen] = useState(true);
   const [isMobileSidebarOpen, setMobileSidebarOpen] = useState(false);
+
+  // Define sidebarProps with correct types, including onMobileSidebarClose
+  const sidebarProps: SidebarProps = {
+    isSidebarOpen,
+    isMobileSidebarOpen,
+    onSidebarClose: () => setMobileSidebarOpen(false), // Ensure onSidebarClose is correctly defined
+    onMobileSidebarClose: () => setMobileSidebarOpen(false), // Ensure onMobileSidebarClose is correctly defined
+    // Add other props as necessary
+  };
+
   return (
     <MainWrapper className="mainwrapper">
-      {/* ------------------------------------------- */}
-      {/* Sidebar */}
-      {/* ------------------------------------------- */}
-      <Sidebar
-        isSidebarOpen={isSidebarOpen}
-        isMobileSidebarOpen={isMobileSidebarOpen}
-        onSidebarClose={() => setMobileSidebarOpen(false)}
-      />
-      {/* ------------------------------------------- */}
+      {/* Render Sidebar component with sidebarProps */}
+      <Sidebar {...sidebarProps} />
+
       {/* Main Wrapper */}
-      {/* ------------------------------------------- */}
       <PageWrapper className="page-wrapper">
-        {/* ------------------------------------------- */}
-        {/* Header */}
-        {/* ------------------------------------------- */}
+        {/* Render Header component */}
         <Header toggleMobileSidebar={() => setMobileSidebarOpen(true)} />
-        {/* ------------------------------------------- */}
+
         {/* PageContent */}
-        {/* ------------------------------------------- */}
         <Container
           maxWidth={false}
-          
           sx={{
             margin: 0,
             width: '100%',
             paddingTop: '20px',
-            maxWidth: 'none', // Ensure no max width is applied
-            border: 'none', // Remove border
-  backgroundColor: 'transparent', // Set background color to transparent
+            maxWidth: 'none',
+            border: 'none',
+            backgroundColor: 'transparent',
           }}
         >
-
-          {/* ------------------------------------------- */}
           {/* Page Route */}
-          {/* ------------------------------------------- */}
           <Box sx={{ minHeight: "calc(100vh - 170px)" }}>{children}</Box>
-          {/* ------------------------------------------- */}
-          {/* End Page */}
-          {/* ------------------------------------------- */}
         </Container>
       </PageWrapper>
     </MainWrapper>

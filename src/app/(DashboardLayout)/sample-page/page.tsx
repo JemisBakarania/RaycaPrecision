@@ -49,7 +49,7 @@ const SamplePage = () => {
   const [showWarningAlert, setwarningShowAlert] = useState(true); // State to control alert visibility
 
 
-  const handleChange = (event, newValue) => {
+  const handleChange = (event: React.SyntheticEvent, newValue: number) => {
     setSelectedTab(newValue);
   };
   const handleDismiss = () => {
